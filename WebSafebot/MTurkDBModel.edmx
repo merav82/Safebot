@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MTurkDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EcChat">
+          <Key>
+            <PropertyRef Name="runningId" />
+          </Key>
+          <Property Name="gameId" Type="int" Nullable="false" />
+          <Property Name="time" Type="datetime" Nullable="false" />
+          <Property Name="isAgentTalk" Type="bit" Nullable="false" />
+          <Property Name="sentence" Type="nchar" MaxLength="500" Nullable="false" />
+          <Property Name="runningId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EcGames">
+          <Key>
+            <PropertyRef Name="gameId" />
+          </Key>
+          <Property Name="expNum" Type="int" Nullable="false" />
+          <Property Name="workerId" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="assignmentId" Type="nchar" MaxLength="40" Nullable="false" />
+          <Property Name="gameId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="insertTime" Type="datetime" Nullable="false" />
+          <Property Name="isLearningMode" Type="bit" Nullable="false" />
+          <Property Name="isComplete" Type="bit" Nullable="false" />
+          <Property Name="tasksCompleted" Type="int" Nullable="false" />
+          <Property Name="currentTask" Type="nchar" MaxLength="200" Nullable="false" />
+          <Property Name="completeTime" Type="datetime" />
+          <Property Name="bonus" Type="int" />
+          <Property Name="finished" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EcQuest">
+          <Key>
+            <PropertyRef Name="workerId" />
+            <PropertyRef Name="assignmentId" />
+          </Key>
+          <Property Name="workerId" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="assignmentId" Type="nchar" MaxLength="40" Nullable="false" />
+          <Property Name="program" Type="int" Nullable="false" />
+          <Property Name="smart" Type="int" Nullable="false" />
+          <Property Name="offensive" Type="int" Nullable="false" />
+          <Property Name="meaningless" Type="int" Nullable="false" />
+          <Property Name="real" Type="int" Nullable="false" />
+          <Property Name="interest" Type="int" Nullable="false" />
+          <Property Name="enjoy" Type="int" Nullable="false" />
+          <Property Name="instructionsRead" Type="int" Nullable="false" />
+          <Property Name="instructNotRead" Type="int" Nullable="false" />
+          <Property Name="comments" Type="nchar" MaxLength="500" Nullable="false" />
+          <Property Name="hitCode" Type="nchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EcTasksCompleted">
+          <Key>
+            <PropertyRef Name="gameId" />
+            <PropertyRef Name="taskName" />
+          </Key>
+          <Property Name="gameId" Type="int" Nullable="false" />
+          <Property Name="taskName" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="completedTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MTurkDB.dbo.EcWorkers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="EcWorkers">
+          <Key>
+            <PropertyRef Name="workerId" />
+            <PropertyRef Name="age" />
+            <PropertyRef Name="country" />
+            <PropertyRef Name="education" />
+            <PropertyRef Name="gender" />
+          </Key>
+          <Property Name="workerId" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="country" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="education" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="gender" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="culture" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="GnBonus">
+          <Key>
+            <PropertyRef Name="workerId" />
+            <PropertyRef Name="assignmentId" />
+            <PropertyRef Name="userBonusNumber" />
+          </Key>
+          <Property Name="workerId" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="assignmentId" Type="nchar" MaxLength="40" Nullable="false" />
+          <Property Name="userBonusNumber" Type="int" Nullable="false" />
+          <Property Name="gameName" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="bonusAmount" Type="float" Nullable="false" />
+          <Property Name="tryingToGrant" Type="bit" Nullable="false" />
+          <Property Name="grantedSuccefully" Type="bit" Nullable="false" />
+          <Property Name="createdTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MTurkDB.dbo.GnExceptions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="GnExceptions">
+          <Key>
+            <PropertyRef Name="message" />
+            <PropertyRef Name="timeOccur" />
+            <PropertyRef Name="logLevel" />
+          </Key>
+          <Property Name="message" Type="nchar" MaxLength="200" Nullable="false" />
+          <Property Name="timeOccur" Type="datetime" Nullable="false" />
+          <Property Name="logLevel" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="MTurkDBModelStoreContainer">
+          <EntitySet Name="EcChat" EntityType="Self.EcChat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EcGames" EntityType="Self.EcGames" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EcQuest" EntityType="Self.EcQuest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EcTasksCompleted" EntityType="Self.EcTasksCompleted" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GnBonus" EntityType="Self.GnBonus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EcWorkers" EntityType="Self.EcWorkers" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [EcWorkers].[workerId] AS [workerId], 
+    [EcWorkers].[age] AS [age], 
+    [EcWorkers].[country] AS [country], 
+    [EcWorkers].[education] AS [education], 
+    [EcWorkers].[gender] AS [gender], 
+    [EcWorkers].[culture] AS [culture]
+    FROM [dbo].[EcWorkers] AS [EcWorkers]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="GnExceptions" EntityType="Self.GnExceptions" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [GnExceptions].[message] AS [message], 
+    [GnExceptions].[timeOccur] AS [timeOccur], 
+    [GnExceptions].[logLevel] AS [logLevel]
+    FROM [dbo].[GnExceptions] AS [GnExceptions]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MTurkDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EcGame">
+          <Key>
+            <PropertyRef Name="gameId" />
+          </Key>
+          <Property Name="expNum" Type="Int32" Nullable="false" />
+          <Property Name="workerId" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="assignmentId" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="gameId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="isComplete" Type="Boolean" Nullable="false" />
+          <Property Name="insertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isLearningMode" Type="Boolean" Nullable="false" />
+          <Property Name="completeTime" Type="DateTime" Precision="3" />
+          <Property Name="bonus" Type="Int32" />
+          <Property Name="tasksCompleted" Type="Int32" Nullable="false" />
+          <Property Name="currentTask" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="finished" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EcWorker">
+          <Key>
+            <PropertyRef Name="workerId" />
+            <PropertyRef Name="age" />
+            <PropertyRef Name="country" />
+            <PropertyRef Name="education" />
+            <PropertyRef Name="gender" />
+          </Key>
+          <Property Name="workerId" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="country" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="education" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="culture" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="MTurkDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EcGames" EntityType="Self.EcGame" />
+          <EntitySet Name="EcWorkers" EntityType="Self.EcWorker" />
+          <EntitySet Name="GnExceptions" EntityType="MTurkDBModel.GnException" />
+          <EntitySet Name="EcTasksCompleteds" EntityType="MTurkDBModel.EcTasksCompleted" />
+          <EntitySet Name="EcQuests" EntityType="MTurkDBModel.EcQuest" />
+          <EntitySet Name="EcChats" EntityType="MTurkDBModel.EcChat" />
+          <EntitySet Name="GnBonus" EntityType="MTurkDBModel.GnBonu" />
+        </EntityContainer>
+        <EntityType Name="GnException">
+          <Key>
+            <PropertyRef Name="message" />
+            <PropertyRef Name="timeOccur" />
+            <PropertyRef Name="logLevel" />
+          </Key>
+          <Property Name="message" Type="String" Nullable="false" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="timeOccur" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="logLevel" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="EcTasksCompleted">
+          <Key>
+            <PropertyRef Name="gameId" />
+            <PropertyRef Name="taskName" />
+          </Key>
+          <Property Name="gameId" Type="Int32" Nullable="false" />
+          <Property Name="taskName" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="completedTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="EcQuest">
+          <Key>
+            <PropertyRef Name="workerId" />
+            <PropertyRef Name="assignmentId" />
+          </Key>
+          <Property Name="workerId" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="assignmentId" Type="String" Nullable="false" MaxLength="40" FixedLength="true" Unicode="true" />
+          <Property Name="program" Type="Int32" Nullable="false" />
+          <Property Name="smart" Type="Int32" Nullable="false" />
+          <Property Name="offensive" Type="Int32" Nullable="false" />
+          <Property Name="meaningless" Type="Int32" Nullable="false" />
+          <Property Name="real" Type="Int32" Nullable="false" />
+          <Property Name="comments" Type="String" Nullable="false" MaxLength="500" FixedLength="true" Unicode="true" />
+          <Property Name="interest" Type="Int32" Nullable="false" />
+          <Property Name="enjoy" Type="Int32" Nullable="false" />
+          <Property Name="instructionsRead" Type="Int32" Nullable="false" />
+          <Property Name="instructNotRead" Type="Int32" Nullable="false" />
+          <Property Name="hitCode" Type="String" Nullable="false" MaxLength="15"  FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="EcChat">
+          <Key>
+            <PropertyRef Name="runningId" />
+          </Key>
+          <Property Name="gameId" Type="Int32" Nullable="false" />
+          <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isAgentTalk" Type="Boolean" Nullable="false" />
+          <Property Name="sentence" Type="String" Nullable="false" MaxLength="500" FixedLength="true" Unicode="true" />
+          <Property Name="runningId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="GnBonu">
+          <Key>
+            <PropertyRef Name="workerId" />
+            <PropertyRef Name="assignmentId" />
+            <PropertyRef Name="userBonusNumber" />
+          </Key>
+          <Property Name="workerId" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="assignmentId" Type="String" Nullable="false" MaxLength="40" FixedLength="true" Unicode="true" />
+          <Property Name="userBonusNumber" Type="Int32" Nullable="false" />
+          <Property Name="gameName" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="bonusAmount" Type="Double" Nullable="false" />
+          <Property Name="tryingToGrant" Type="Boolean" Nullable="false" />
+          <Property Name="grantedSuccefully" Type="Boolean" Nullable="false" />
+          <Property Name="createdTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MTurkDBModelStoreContainer" CdmEntityContainer="MTurkDBEntities">
+          <EntitySetMapping Name="EcGames">
+            <EntityTypeMapping TypeName="MTurkDBModel.EcGame">
+              <MappingFragment StoreEntitySet="EcGames">
+                <ScalarProperty Name="finished" ColumnName="finished" />
+                <ScalarProperty Name="currentTask" ColumnName="currentTask" />
+                <ScalarProperty Name="tasksCompleted" ColumnName="tasksCompleted" />
+                <ScalarProperty Name="expNum" ColumnName="expNum" />
+                <ScalarProperty Name="workerId" ColumnName="workerId" />
+                <ScalarProperty Name="assignmentId" ColumnName="assignmentId" />
+                <ScalarProperty Name="gameId" ColumnName="gameId" />
+                <ScalarProperty Name="isComplete" ColumnName="isComplete" />
+                <ScalarProperty Name="insertTime" ColumnName="insertTime" />
+                <ScalarProperty Name="isLearningMode" ColumnName="isLearningMode" />
+                <ScalarProperty Name="completeTime" ColumnName="completeTime" />
+                <ScalarProperty Name="bonus" ColumnName="bonus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EcWorkers">
+            <EntityTypeMapping TypeName="MTurkDBModel.EcWorker">
+              <MappingFragment StoreEntitySet="EcWorkers">
+                <ScalarProperty Name="workerId" ColumnName="workerId" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="education" ColumnName="education" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="culture" ColumnName="culture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GnExceptions">
+            <EntityTypeMapping TypeName="MTurkDBModel.GnException">
+              <MappingFragment StoreEntitySet="GnExceptions">
+                <ScalarProperty Name="logLevel" ColumnName="logLevel" />
+                <ScalarProperty Name="timeOccur" ColumnName="timeOccur" />
+                <ScalarProperty Name="message" ColumnName="message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EcTasksCompleteds">
+            <EntityTypeMapping TypeName="MTurkDBModel.EcTasksCompleted">
+              <MappingFragment StoreEntitySet="EcTasksCompleted">
+                <ScalarProperty Name="completedTime" ColumnName="completedTime" />
+                <ScalarProperty Name="taskName" ColumnName="taskName" />
+                <ScalarProperty Name="gameId" ColumnName="gameId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EcQuests">
+            <EntityTypeMapping TypeName="MTurkDBModel.EcQuest">
+              <MappingFragment StoreEntitySet="EcQuest">
+                <ScalarProperty Name="interest" ColumnName="interest" />
+                <ScalarProperty Name="enjoy" ColumnName="enjoy" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="smart" ColumnName="smart" />
+                <ScalarProperty Name="program" ColumnName="program" />
+                <ScalarProperty Name="offensive" ColumnName="offensive" />
+                <ScalarProperty Name="meaningless" ColumnName="meaningless" />
+                <ScalarProperty Name="real" ColumnName="real"/>
+                <ScalarProperty Name="instructNotRead" ColumnName="instructNotRead" />
+                <ScalarProperty Name="instructionsRead" ColumnName="instructionsRead" />
+                <ScalarProperty Name="assignmentId" ColumnName="assignmentId" />
+                <ScalarProperty Name="workerId" ColumnName="workerId" />
+                <ScalarProperty Name="hitCode" ColumnName="hitCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EcChats">
+            <EntityTypeMapping TypeName="MTurkDBModel.EcChat">
+              <MappingFragment StoreEntitySet="EcChat">
+                <ScalarProperty Name="runningId" ColumnName="runningId" />
+                <ScalarProperty Name="sentence" ColumnName="sentence" />
+                <ScalarProperty Name="isAgentTalk" ColumnName="isAgentTalk" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="gameId" ColumnName="gameId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GnBonus">
+            <EntityTypeMapping TypeName="MTurkDBModel.GnBonu">
+              <MappingFragment StoreEntitySet="GnBonus">
+                <ScalarProperty Name="createdTime" ColumnName="createdTime" />
+                <ScalarProperty Name="grantedSuccefully" ColumnName="grantedSuccefully" />
+                <ScalarProperty Name="tryingToGrant" ColumnName="tryingToGrant" />
+                <ScalarProperty Name="bonusAmount" ColumnName="bonusAmount" />
+                <ScalarProperty Name="gameName" ColumnName="gameName" />
+                <ScalarProperty Name="userBonusNumber" ColumnName="userBonusNumber" />
+                <ScalarProperty Name="assignmentId" ColumnName="assignmentId" />
+                <ScalarProperty Name="workerId" ColumnName="workerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
